@@ -4,9 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Serenade"
+        xmlns:controls="clr-namespace:Serenade.Controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="1080" Width="1920">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1400" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <WrapPanel  x:Name="wpTileArea" Grid.Column="0" Height="auto" Width="auto" HorizontalAlignment="Center" VerticalAlignment="Center"></WrapPanel>
+        <DockPanel Grid.Column="1" Height="auto" Width="auto">
+            <controls:UcControlSet x:Name="ucControlSet"></controls:UcControlSet>
+        </DockPanel>
     </Grid>
 </Window>
