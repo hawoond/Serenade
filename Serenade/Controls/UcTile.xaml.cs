@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Serenade.UDT;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Serenade.Controls
 {
@@ -27,15 +18,46 @@ namespace Serenade.Controls
         {
             InitializeComponent();
 
+            
         }
 
         // 타일, 공간 구분
-        // false : 공간, true : 타일
+        // false : 아이템, true : 타일
         public bool isTileType
         {
-            get;
-            set;
+            get
+            {
+                return isTileType;
+            }
+            set
+            {
+                if(value)
+                {
+                    lbTileName.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    this.Padding = new Thickness(5, 5, 5, 5);
+                    lbTileName.Visibility = Visibility.Visible;
+                }
+            }
         }
+
+        /// <summary>
+        /// 타일 이름 설정
+        /// </summary>
+        public string lbName
+        {
+            get
+            {
+                return lbName;
+            }
+            set
+            {
+                lbTileName.Content = value;
+            }
+        }
+
 
         // 타일 환경 속성
         public string sEnvironmentalProperty
@@ -59,7 +81,7 @@ namespace Serenade.Controls
 
             }
         }
-
+        
         // 타일 위치 X좌표
         public int nTileLocationX
         {
@@ -77,7 +99,17 @@ namespace Serenade.Controls
         // 마우스 다운 이벤트
         private void grTile_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            getLocation(nTileLocationX, nTileLocationY);
+            if(isTileType)
+            {
+                if (nTileLocationX != 0 && nTileLocationY != 0)
+                {
+                    getLocation(nTileLocationX, nTileLocationY);
+                }
+            }
+            else
+            {
+                InfoMaster.Instance().SelectedColor = this.colorTileImage;
+            }
         }
 
         // 또 뭐가 필요하지..

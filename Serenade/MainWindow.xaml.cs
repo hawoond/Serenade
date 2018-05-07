@@ -62,6 +62,7 @@ namespace Serenade
             for (int i = 0; i < x * y; i++)
             {
                 UcTile ucTile = new UcTile();
+                ucTile.isTileType = true;
                 ucTile.getLocation += UcTile_getLocation;
                 ucTile.nTileLocationX = nTileLocationX;
                 ucTile.nTileLocationY = nTileLocationY;

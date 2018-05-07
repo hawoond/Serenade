@@ -21,8 +21,10 @@
                 <Label x:Name="lbInputX" Width="auto"/>
                 <Label Content="Y : " Margin="50,0,0,0"/>
                 <Label x:Name="lbInputY" Width="auto"/>
-                
             </StackPanel>
+
+            <WrapPanel x:Name="wpTileList" Width="auto" HorizontalAlignment="Center">
+            </WrapPanel>
         </StackPanel>
     </Grid>
 

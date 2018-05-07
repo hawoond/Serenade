@@ -15,8 +15,8 @@ using System.Windows.Shapes;
 
 namespace Serenade.Controls
 {
-    public delegate void AddTile(); 
-    public delegate void AreaSetting(int x, int y); 
+    public delegate void AddTile();
+    public delegate void AreaSetting(int x, int y);
 
     /// <summary>
     /// UcButtonTest.xaml에 대한 상호 작용 논리
@@ -31,6 +31,8 @@ namespace Serenade.Controls
         public UcControlSet()
         {
             InitializeComponent();
+            // 타일 리스트 초기화
+            SetTileList();
         }
 
         /// <summary>
@@ -66,6 +68,26 @@ namespace Serenade.Controls
         {
             lbInputX.Content = (x - 1).ToString();
             lbInputY.Content = (y - 1).ToString();
+        }
+
+        /// <summary>
+        /// 타일 리스트 세팅
+        /// </summary>
+        public void SetTileList()
+        {
+            for (int i = 0; i < 255; i++)
+            {
+                // 임시 전체 색상 적용
+                Color testColor = Color.FromRgb(0, 100, byte.Parse(i.ToString()));
+
+                UcTile ucTile = new UcTile();
+                ucTile.isTileType = false;
+                ucTile.lbName = testColor.ToString();
+                ucTile.colorTileImage = testColor;
+
+                wpTileList.Children.Add(ucTile);
+            }
+
         }
     }
 }
