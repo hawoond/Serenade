@@ -75,16 +75,16 @@ namespace Serenade.Controls
         /// </summary>
         public void SetTileList()
         {
-            for (int i = 0; i < 255; i++)
+            for (int i = 0; i < 50; i++)
             {
                 // 임시 전체 색상 적용
-                Color testColor = Color.FromRgb(0, 100, byte.Parse(i.ToString()));
+                Color testColor = Color.FromRgb(0, 100, byte.Parse(20.ToString()));
 
                 UcTile ucTile = new UcTile();
-                ucTile.isTileType = false;
+
                 ucTile.lbName = testColor.ToString();
                 ucTile.colorTileImage = testColor;
-
+                ucTile.isTileType = false;
                 wpTileList.Children.Add(ucTile);
             }
 

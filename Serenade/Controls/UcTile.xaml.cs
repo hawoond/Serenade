@@ -17,12 +17,21 @@ namespace Serenade.Controls
         public UcTile()
         {
             InitializeComponent();
-
-            
         }
 
-        // 타일, 공간 구분
-        // false : 아이템, true : 타일
+        public void Init()
+        {
+            this.isTileType = false;
+            this.colorTileImage = new Color();
+            this.sEnvironmentalProperty = string.Empty;
+            this.nTileLocationX = 0;
+            this.nTileLocationY = 0;
+        }
+
+        /// <summary>
+        /// 타일, 공간 구분 
+        /// false : 아이템, true : 타일 </summary>
+        /// </summary>
         public bool isTileType
         {
             get
@@ -31,7 +40,8 @@ namespace Serenade.Controls
             }
             set
             {
-                if(value)
+                isTileType = value;
+                if (isTileType)
                 {
                     lbTileName.Visibility = Visibility.Hidden;
                 }
@@ -40,12 +50,13 @@ namespace Serenade.Controls
                     this.Padding = new Thickness(5, 5, 5, 5);
                     lbTileName.Visibility = Visibility.Visible;
                 }
+                
             }
         }
 
-        /// <summary>
-        /// 타일 이름 설정
-        /// </summary>
+        ///// <summary>
+        ///// 타일 이름 설정
+        ///// </summary>
         public string lbName
         {
             get
@@ -81,7 +92,7 @@ namespace Serenade.Controls
 
             }
         }
-        
+
         // 타일 위치 X좌표
         public int nTileLocationX
         {
@@ -99,7 +110,7 @@ namespace Serenade.Controls
         // 마우스 다운 이벤트
         private void grTile_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(isTileType)
+            if (isTileType)
             {
                 if (nTileLocationX != 0 && nTileLocationY != 0)
                 {
