@@ -62,7 +62,7 @@ namespace Serenade
             for (int i = 0; i < x * y; i++)
             {
                 UcTile ucTile = new UcTile();
-                ucTile.isTileType = true;
+                ucTile.IsTileType = true;
                 ucTile.getLocation += UcTile_getLocation;
                 ucTile.nTileLocationX = nTileLocationX;
                 ucTile.nTileLocationY = nTileLocationY;
@@ -79,7 +79,7 @@ namespace Serenade
                 }
 
                
-                ucTile.colorTileImage = testColor;
+                ucTile.ColorTileImage = testColor;
                 this.wpTileArea.Children.Add(ucTile);
                 arrUcTile.Add(ucTile);
 
@@ -96,7 +96,7 @@ namespace Serenade
             {
                 if (((UcTile)this.wpTileArea.Children[i]).nTileLocationX.Equals(3))
                 {
-                    ((UcTile)this.wpTileArea.Children[i]).colorTileImage = testColor2;
+                    ((UcTile)this.wpTileArea.Children[i]).ColorTileImage = testColor2;
                 }
             }
         }
@@ -111,7 +111,7 @@ namespace Serenade
             Color testColor = Color.FromRgb(255, 0, 255);
 
             UcTile ucTile = new UcTile();
-            ucTile.colorTileImage = testColor;
+            ucTile.ColorTileImage = testColor;
             this.wpTileArea.Children.Add(ucTile);
         }
 

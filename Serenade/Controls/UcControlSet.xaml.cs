@@ -82,9 +82,9 @@ namespace Serenade.Controls
 
                 UcTile ucTile = new UcTile();
 
-                ucTile.lbName = testColor.ToString();
-                ucTile.colorTileImage = testColor;
-                ucTile.isTileType = false;
+                ucTile.LbName = testColor.ToString();
+                ucTile.ColorTileImage = testColor;
+                ucTile.IsTileType = false;
                 wpTileList.Children.Add(ucTile);
             }
 

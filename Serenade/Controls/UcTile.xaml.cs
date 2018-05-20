@@ -32,7 +32,8 @@ namespace Serenade.Controls
         /// 타일, 공간 구분 
         /// false : 아이템, true : 타일 </summary>
         /// </summary>
-        public bool isTileType
+        private bool isTileType;
+        public bool IsTileType
         {
             get
             {
@@ -57,7 +58,8 @@ namespace Serenade.Controls
         ///// <summary>
         ///// 타일 이름 설정
         ///// </summary>
-        public string lbName
+        private string lbName;
+        public string LbName
         {
             get
             {
@@ -65,7 +67,8 @@ namespace Serenade.Controls
             }
             set
             {
-                lbTileName.Content = value;
+                lbName = value;
+                lbTileName.Content = lbName;
             }
         }
 
@@ -78,7 +81,8 @@ namespace Serenade.Controls
         }
 
         // 타일 환경 속성, 일단 색상으로..
-        public Color colorTileImage
+        private Color colorTileImage;
+        public Color ColorTileImage
         {
             get
             {
