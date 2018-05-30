@@ -33,7 +33,7 @@ namespace Serenade.Controls
             this.sEnvironmentalProperty = string.Empty;
             this.nTileLocationX = 0;
             this.nTileLocationY = 0;
-            
+
 
         }
 
@@ -61,6 +61,32 @@ namespace Serenade.Controls
                     lbTileName.Visibility = Visibility.Visible;
                 }
 
+            }
+        }
+
+        /// <summary>
+        /// 타일 정보(객체, 배경) 구분 
+        /// false : 객체, true : 배경 </summary>
+        /// </summary>
+        private bool isTileInfo;
+        public bool IsTileInfo
+        {
+            get
+            {
+                return isTileInfo;
+            }
+            set
+            {
+                isTileInfo = value;
+                //if (isTileInfo)
+                //{
+                //    lbTileName.Visibility = Visibility.Hidden;
+                //}
+                //else
+                //{
+                //    this.Padding = new Thickness(5, 5, 5, 5);
+                //    lbTileName.Visibility = Visibility.Visible;
+                //}
             }
         }
 
@@ -106,7 +132,7 @@ namespace Serenade.Controls
             }
         }
 
-        // 타일 환경 속성, 일단 색상으로..
+        // 타일 환경 속성
         private Bitmap bitmapTileImage;
         public Bitmap BitmapTileImage
         {
@@ -122,9 +148,14 @@ namespace Serenade.Controls
 
                 var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(value.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
                 imageBrush.ImageSource = bitmapSource;
-
-                this.grTile.Background = imageBrush;
-
+                if (IsTileInfo)
+                {
+                    this.grTile.Background = imageBrush;
+                }
+                else
+                {
+                    this.grObject.Background = imageBrush;
+                }
                 bitmapTileImage = value;
             }
         }
@@ -143,7 +174,11 @@ namespace Serenade.Controls
             set;
         }
 
-        // 마우스 다운 이벤트
+        /// <summary>
+        /// 타일 마우스 다운 이벤트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grTile_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (isTileType)
@@ -151,12 +186,14 @@ namespace Serenade.Controls
                 if (nTileLocationX != 0 && nTileLocationY != 0)
                 {
                     getLocation(nTileLocationX, nTileLocationY);
+
                     BitmapTileImage = InfoMaster.Instance().SelectedImage;
                 }
             }
             else
             {
                 InfoMaster.Instance().SelectedImage = this.BitmapTileImage;
+
             }
         }
 
