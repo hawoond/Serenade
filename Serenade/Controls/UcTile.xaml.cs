@@ -86,13 +86,13 @@ namespace Serenade.Controls
         {
             get
             {
-                Color cValue;
-                cValue = (this.grTile.Background as SolidColorBrush).Color;
-                return cValue;
+                colorTileImage = (this.grTile.Background as SolidColorBrush).Color;
+                return colorTileImage;
             }
             set
             {
                 this.grTile.Background = new SolidColorBrush(value);
+                colorTileImage = value;
 
             }
         }
@@ -119,6 +119,7 @@ namespace Serenade.Controls
                 if (nTileLocationX != 0 && nTileLocationY != 0)
                 {
                     getLocation(nTileLocationX, nTileLocationY);
+                    ColorTileImage=InfoMaster.Instance().SelectedColor;
                 }
             }
             else
