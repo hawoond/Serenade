@@ -63,6 +63,7 @@
       <DependentUpon>UcTile.xaml</DependentUpon>
     </Compile>
     <Compile Include="UDT\InfoMaster.cs" />
+    <Compile Include="Utils\SplitImage.cs" />
     <Page Include="Controls\UcControlSet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -117,6 +118,13 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resource\Residential.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resource\top_midgard.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

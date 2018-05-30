@@ -1,8 +1,12 @@
 ﻿using Serenade.UDT;
+using System;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Serenade.Controls
 {
@@ -13,19 +17,24 @@ namespace Serenade.Controls
     /// </summary>
     public partial class UcTile : UserControl
     {
+
         public event GetLocation getLocation;
         public UcTile()
         {
             InitializeComponent();
+            Init();
         }
 
         public void Init()
         {
             this.isTileType = false;
-            this.colorTileImage = new Color();
+            this.colorTileImage = new System.Windows.Media.Color();
+
             this.sEnvironmentalProperty = string.Empty;
             this.nTileLocationX = 0;
             this.nTileLocationY = 0;
+            
+
         }
 
         /// <summary>
@@ -51,7 +60,7 @@ namespace Serenade.Controls
                     this.Padding = new Thickness(5, 5, 5, 5);
                     lbTileName.Visibility = Visibility.Visible;
                 }
-                
+
             }
         }
 
@@ -81,8 +90,8 @@ namespace Serenade.Controls
         }
 
         // 타일 환경 속성, 일단 색상으로..
-        private Color colorTileImage;
-        public Color ColorTileImage
+        private System.Windows.Media.Color colorTileImage;
+        public System.Windows.Media.Color ColorTileImage
         {
             get
             {
@@ -94,6 +103,29 @@ namespace Serenade.Controls
                 this.grTile.Background = new SolidColorBrush(value);
                 colorTileImage = value;
 
+            }
+        }
+
+        // 타일 환경 속성, 일단 색상으로..
+        private Bitmap bitmapTileImage;
+        public Bitmap BitmapTileImage
+        {
+            get
+            {
+                return this.bitmapTileImage;
+            }
+            set
+            {
+                //imageBrush.ImageSource = (ImageSource)imageSourceConverter.ConvertFrom(value);
+
+                ImageBrush imageBrush = new ImageBrush();
+
+                var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(value.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                imageBrush.ImageSource = bitmapSource;
+
+                this.grTile.Background = imageBrush;
+
+                bitmapTileImage = value;
             }
         }
 
@@ -119,12 +151,12 @@ namespace Serenade.Controls
                 if (nTileLocationX != 0 && nTileLocationY != 0)
                 {
                     getLocation(nTileLocationX, nTileLocationY);
-                    ColorTileImage=InfoMaster.Instance().SelectedColor;
+                    BitmapTileImage = InfoMaster.Instance().SelectedImage;
                 }
             }
             else
             {
-                InfoMaster.Instance().SelectedColor = this.colorTileImage;
+                InfoMaster.Instance().SelectedImage = this.BitmapTileImage;
             }
         }
 

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Serenade.Utils;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,11 +30,32 @@ namespace Serenade.Controls
         // 전체 영역 세팅 이벤트
         public event AreaSetting areaSetting;
 
+        private string folderName = @"C:\Users\wjkim\Source\Repos\Serenade\Serenade\Resource";
         public UcControlSet()
         {
             InitializeComponent();
             // 타일 리스트 초기화
-            SetTileList();
+
+            List<string> arrTilePath = new List<string>(TilePath(folderName));
+            for (int i = 0; i < arrTilePath.Count; i++)
+            {
+                SetTileList(arrTilePath[i]);
+            }
+        }
+
+        public List<string> TilePath(string sFolderName)
+        {
+            List<string> arrResult = new List<string>();
+
+            System.IO.DirectoryInfo di = new System.IO.DirectoryInfo(sFolderName);
+            foreach (System.IO.FileInfo File in di.GetFiles())
+            {
+                if (File.Extension.ToLower().CompareTo(".png") == 0)
+                {
+                    arrResult.Add(File.FullName);
+                }
+            }
+            return arrResult;
         }
 
         /// <summary>
@@ -73,21 +96,38 @@ namespace Serenade.Controls
         /// <summary>
         /// 타일 리스트 세팅
         /// </summary>
-        public void SetTileList()
+        public void SetTileList(string sResourcePath)
         {
-            for (int i = 0; i < 50; i++)
+            //  sResourcePath = @"C:\Users\wjkim\Source\Repos\Serenade\Serenade\Resource\Residential.png";
+            SplitImage splitImage = new SplitImage();
+            Bitmap resource = new Bitmap(sResourcePath);
+            System.Drawing.Color[,] color = splitImage.GetBitmapPixel(resource);
+            List<Bitmap> resourceSplit = splitImage.GetDivisionBitmap(color, 16, 16);
+
+            WrapPanel wpTileGroup = new WrapPanel();
+
+            wpTileGroup.Orientation = Orientation.Horizontal;
+            wpTileGroup.Width = color.GetLength(0);
+            wpTileGroup.Height = color.GetLength(1);
+
+            wpTileGroup.Margin = new Thickness(5);
+
+            for (int i = 0; i < resourceSplit.Count; i++)
             {
-                // 임시 전체 색상 적용
-                Color testColor = Color.FromRgb(0, 100, byte.Parse(20.ToString()));
+                //// 임시 전체 색상 적용
+                //Color testColor = Color.FromRgb(0, 100, byte.Parse(20.ToString()));
 
+                //UcTile ucTile = new UcTile();
+
+                //ucTile.LbName = testColor.ToString();
+                //ucTile.ColorTileImage = testColor;
+                //ucTile.IsTileType = false;
+                //wpTileList.Children.Add(ucTile);
                 UcTile ucTile = new UcTile();
-
-                ucTile.LbName = testColor.ToString();
-                ucTile.ColorTileImage = testColor;
-                ucTile.IsTileType = false;
-                wpTileList.Children.Add(ucTile);
+                ucTile.BitmapTileImage = resourceSplit[i];
+                wpTileGroup.Children.Add(ucTile);
             }
-
+            wpTileList.Children.Add(wpTileGroup);
         }
     }
 }
