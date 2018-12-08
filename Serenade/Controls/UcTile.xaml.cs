@@ -1,8 +1,12 @@
 ﻿using Serenade.UDT;
+using System;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Serenade.Controls
 {
@@ -13,19 +17,24 @@ namespace Serenade.Controls
     /// </summary>
     public partial class UcTile : UserControl
     {
+
         public event GetLocation getLocation;
         public UcTile()
         {
             InitializeComponent();
+            Init();
         }
 
         public void Init()
         {
             this.isTileType = false;
-            this.colorTileImage = new Color();
+            this.colorTileImage = new System.Windows.Media.Color();
+
             this.sEnvironmentalProperty = string.Empty;
             this.nTileLocationX = 0;
             this.nTileLocationY = 0;
+
+
         }
 
         /// <summary>
@@ -51,7 +60,33 @@ namespace Serenade.Controls
                     this.Padding = new Thickness(5, 5, 5, 5);
                     lbTileName.Visibility = Visibility.Visible;
                 }
-                
+
+            }
+        }
+
+        /// <summary>
+        /// 타일 정보(객체, 배경) 구분 
+        /// false : 객체, true : 배경 </summary>
+        /// </summary>
+        private bool isTileInfo;
+        public bool IsTileInfo
+        {
+            get
+            {
+                return isTileInfo;
+            }
+            set
+            {
+                isTileInfo = value;
+                //if (isTileInfo)
+                //{
+                //    lbTileName.Visibility = Visibility.Hidden;
+                //}
+                //else
+                //{
+                //    this.Padding = new Thickness(5, 5, 5, 5);
+                //    lbTileName.Visibility = Visibility.Visible;
+                //}
             }
         }
 
@@ -81,19 +116,47 @@ namespace Serenade.Controls
         }
 
         // 타일 환경 속성, 일단 색상으로..
-        private Color colorTileImage;
-        public Color ColorTileImage
+        private System.Windows.Media.Color colorTileImage;
+        public System.Windows.Media.Color ColorTileImage
         {
             get
             {
-                Color cValue;
-                cValue = (this.grTile.Background as SolidColorBrush).Color;
-                return cValue;
+                colorTileImage = (this.grTile.Background as SolidColorBrush).Color;
+                return colorTileImage;
             }
             set
             {
                 this.grTile.Background = new SolidColorBrush(value);
+                colorTileImage = value;
 
+            }
+        }
+
+        // 타일 환경 속성
+        private Bitmap bitmapTileImage;
+        public Bitmap BitmapTileImage
+        {
+            get
+            {
+                return this.bitmapTileImage;
+            }
+            set
+            {
+                //imageBrush.ImageSource = (ImageSource)imageSourceConverter.ConvertFrom(value);
+
+                ImageBrush imageBrush = new ImageBrush();
+
+                var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(value.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                imageBrush.ImageSource = bitmapSource;
+                if (IsTileInfo)
+                {
+                    this.grTile.Background = imageBrush;
+                }
+                else
+                {
+                    this.grObject.Background = imageBrush;
+                }
+                bitmapTileImage = value;
             }
         }
 
@@ -111,7 +174,11 @@ namespace Serenade.Controls
             set;
         }
 
-        // 마우스 다운 이벤트
+        /// <summary>
+        /// 타일 마우스 다운 이벤트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grTile_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (isTileType)
@@ -119,11 +186,14 @@ namespace Serenade.Controls
                 if (nTileLocationX != 0 && nTileLocationY != 0)
                 {
                     getLocation(nTileLocationX, nTileLocationY);
+
+                    BitmapTileImage = InfoMaster.Instance().SelectedImage;
                 }
             }
             else
             {
-                InfoMaster.Instance().SelectedColor = this.colorTileImage;
+                InfoMaster.Instance().SelectedImage = this.BitmapTileImage;
+
             }
         }
 

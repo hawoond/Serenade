@@ -21,7 +21,7 @@ namespace Serenade
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<UcTile> arrUcTile = new List<UcTile>();
+        private List<UcTile> arrUcTile = new List<UcTile>();
 
         public MainWindow()
         {
@@ -31,6 +31,8 @@ namespace Serenade
             this.ucControlSet.areaSetting += ucControlSet_areaSetting;
 
         }
+
+        #region 이벤트
 
         /// <summary>
         /// 전체 영역 설정 이벤트
@@ -52,7 +54,7 @@ namespace Serenade
             this.wpTileArea.Height = nHeightTileSize;
 
             // 임시 전체 색상 적용
-            Color testColor = Color.FromRgb(255, 0, 255);
+            Color testColor = Color.FromRgb(50, 50, 50);
 
 
             int nTileLocationX = 1;
@@ -78,34 +80,17 @@ namespace Serenade
                     nTileLocationY++;
                 }
 
-               
+
                 ucTile.ColorTileImage = testColor;
                 this.wpTileArea.Children.Add(ucTile);
                 arrUcTile.Add(ucTile);
-
-                //if (nTileLocationX == 0)
-                //{
-                //    nTileLocationX++;
-                //}
-            }
-
-            // 좌표 별 색상 변환 테스트
-            Color testColor2 = Color.FromRgb(0, 0, 0);
-
-            for (int i = 0; i < this.wpTileArea.Children.Count; i++)
-            {
-                if (((UcTile)this.wpTileArea.Children[i]).nTileLocationX.Equals(3))
-                {
-                    ((UcTile)this.wpTileArea.Children[i]).ColorTileImage = testColor2;
-                }
             }
         }
 
-        private void UcTile_getLocation(int x, int y)
-        {
-            this.ucControlSet.SetLocation(x, y);
-        }
 
+        /// <summary>
+        /// 초기 타일 색상 세팅 이벤트
+        /// </summary>
         private void ucControlSet_addTile()
         {
             Color testColor = Color.FromRgb(255, 0, 255);
@@ -114,7 +99,20 @@ namespace Serenade
             ucTile.ColorTileImage = testColor;
             this.wpTileArea.Children.Add(ucTile);
         }
+        #endregion
 
+        /// <summary>
+        /// 타일 위치 반환
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        private void UcTile_getLocation(int x, int y)
+        {
+            this.ucControlSet.SetLocation(x, y);
+        }
+        /// <summary>
+        /// 타일 초기화
+        /// </summary>
         private void TileClear()
         {
             wpTileArea.Children.Clear();

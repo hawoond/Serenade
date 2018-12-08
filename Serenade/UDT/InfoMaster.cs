@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Drawing;
+using System.Windows.Media;
 
 namespace Serenade.UDT
 {
@@ -34,6 +35,7 @@ namespace Serenade.UDT
             return _instance;
         }
 
-        public Color SelectedColor;
+        public System.Windows.Media.Color SelectedColor;
+        public Bitmap SelectedImage;
     }
 }
