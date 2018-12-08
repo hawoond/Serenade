@@ -75,7 +75,7 @@ namespace Serenade.Controls
         /// </summary>
         public void SetTileList()
         {
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 500; i++)
             {
                 // 임시 전체 색상 적용
                 Color testColor = Color.FromRgb(0, 100, byte.Parse(20.ToString()));
